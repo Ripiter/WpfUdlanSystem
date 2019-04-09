@@ -29,15 +29,13 @@ namespace WpfUdlanSystem
     public partial class MainWindow : Window
     {
         SqlConnection connection = new SqlConnection(@"Data Source=ZBC-EMA-23111;Initial Catalog=master; Integrated Security=True");
-        SqlCommand command;
-        SqlDataAdapter da;
-
 
         Magic newMagic = new Magic();
         public MainWindow()
         {
             InitializeComponent();
             newMagic.ReadingFromSql();
+            pokemonImage.Source = new BitmapImage(new Uri(@"C:\notFound.png"));
         }
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -47,8 +45,15 @@ namespace WpfUdlanSystem
         
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            string poke = pokemonName.Text;
+            newMagic.Happens(poke);
             //Change the method to the logic class
-            Yolo();
+            //Yolo();
+            newMagic.RetriveImage(poke);
+            //pokemonImage.Source = new BitmapImage(new Uri(@"C:\Users\pete168s\Desktop\bulbasaur.png", UriKind.Relative));
+            //pokemonImage.Source = new BitmapImage(new Uri(@"C:\bulbasaur.png"));
+           // pokemonImage.Source = new BitmapImage(new Uri(@"C:\" + poke + ".png"));
+            newMagic.ChangeImage(pokemonImage);
         }
         
         //When user chooses coffe
@@ -63,39 +68,6 @@ namespace WpfUdlanSystem
             string teafefe = tea.Content.ToString();
             newMagic.Happens(teafefe);
         }
-                object ext;
-        void Yolo()
-        {
-            string SQL = "use PokemonSearch; SELECT image FROM AllPokemon WHERE imageName =" + "'bulbasaur'" +  "";
-            string tempFile = @"C:\";
-
-            
-            using (SqlCommand cmd = new SqlCommand(SQL, connection))
-            {
-                cmd.Parameters.Add("@id", SqlDbType.Int).Value = 14;
-                connection.Open();
-                
-                using (SqlDataReader rdr = cmd.ExecuteReader())
-                {
-                    if (rdr.Read())
-                    {
-                        ext = rdr[0];
-                        //File.WriteAllBytes(tempFile + ext, (byte[])rdr["image"]);
-
-                        File.WriteAllBytes(tempFile + "Bulbasasur" + ".png",(byte[])rdr["image"]);
-
-                    }
-                }
-
-                // OS run test
-                // Opens the image
-                Process prc = new Process();
-                prc.StartInfo.FileName = tempFile + "Bulbasasur.png";
-                prc.Start();
-                connection.Close();
-            }
-        }
-
     }
 
 }

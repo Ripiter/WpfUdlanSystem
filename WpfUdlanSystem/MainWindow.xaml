@@ -10,7 +10,6 @@
         <TextBox Name="textbox1" HorizontalAlignment="Left" Height="23" Margin="587,230,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="TextBox_TextChanged" />
         <Button Content="Button" HorizontalAlignment="Left" Margin="637,315,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
         <Label Content="Label" HorizontalAlignment="Left" Margin="392,174,0,0" VerticalAlignment="Top"/>
-        <ListBox HorizontalAlignment="Left" Height="100" Margin="76,72,0,0" VerticalAlignment="Top" Width="100"/>
         <StackPanel HorizontalAlignment="Left" Height="100" Margin="195,72,0,0" VerticalAlignment="Top" Width="100">
         </StackPanel>
         <ComboBox Name="ComboBox1" Width="200" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,20,0,0">
@@ -24,7 +23,8 @@
             <Button Content="Fire Type Pokemon" Click="Button_Click" Width="187"> </Button>
             <Button Content="Water Type Pokemon" Click="Button_Click" Width="185"></Button>
         </ComboBox>
-        <Image Name="pokemon" HorizontalAlignment="Left" Height="100" Margin="362,57,0,0" VerticalAlignment="Top" Width="100"/>
+        <Image Name="pokemonImage" HorizontalAlignment="Left" Height="100" Margin="278,230,0,0" VerticalAlignment="Top" Width="100"/>
+        <TextBox Name="pokemonName" HorizontalAlignment="Left" Height="23" Margin="258,174,0,0" TextWrapping="Wrap" Text="Search For Pokemon" VerticalAlignment="Top" Width="120"/>
 
     </Grid>
 </Window>
