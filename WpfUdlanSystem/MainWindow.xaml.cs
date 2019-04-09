@@ -47,31 +47,8 @@ namespace WpfUdlanSystem
         
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            //Change the method to the logic class
             Yolo();
-         //   string strings = newMagic.ReturnsHappy();
-         //   Console.WriteLine(strings);
-         //   connection.Open();
-         ////   String selectQuery = "SELECT * FROM db_images.myimages WHERE ID = '" + textBoxID.Text + "'";
-         //   String selectQuery = "SELECT * FROM db_images.myimages WHERE ID = "+ "bulbasaur" + "";
-
-         //   command = new SqlCommand(selectQuery, connection);
-
-         //   da = new SqlDataAdapter(command);
-
-         //   DataTable table = new DataTable();
-
-         //   da.Fill(table);
-
-
-
-         //   byte[] img = (byte[])table.Rows[0][1];
-
-         //   MemoryStream ms = new MemoryStream(img);
-
-         //   //Image pokemon = Image.FromStream(ms);
-         //   //Image.SourcePropert
-            
-         //   da.Dispose();
         }
         
         //When user chooses coffe
