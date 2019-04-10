@@ -34,7 +34,7 @@ namespace WpfUdlanSystem
         public MainWindow()
         {
             InitializeComponent();
-            newMagic.ReadingFromSql();
+            //TO DO: change the @c:\ to projekt file
             pokemonImage.Source = new BitmapImage(new Uri(@"C:\notFound.png"));
         }
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -47,12 +47,9 @@ namespace WpfUdlanSystem
         {
             string poke = pokemonName.Text;
             newMagic.Happens(poke);
-            //Change the method to the logic class
-            //Yolo();
-            newMagic.RetriveImage(poke);
-            //pokemonImage.Source = new BitmapImage(new Uri(@"C:\Users\pete168s\Desktop\bulbasaur.png", UriKind.Relative));
-            //pokemonImage.Source = new BitmapImage(new Uri(@"C:\bulbasaur.png"));
-           // pokemonImage.Source = new BitmapImage(new Uri(@"C:\" + poke + ".png"));
+            newMagic.RemoveImage();
+
+            newMagic.RetriveImage();
             newMagic.ChangeImage(pokemonImage);
         }
         

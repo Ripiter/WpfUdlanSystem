@@ -15,23 +15,45 @@ namespace WpfUdlanSystem
 {
     class Magic
     {
-        SqlConnection connection = new SqlConnection(@"Data Source=ZBC-EMA-23111;Initial Catalog=master; Integrated Security=True");
+        Dal dal = new Dal();
+        string userPokemonName;
+        string oldpokemon;
+
+
         /// <summary>
         /// Prints for testing, what user have inputed
+        /// set's pokemons name to users input
         /// </summary>
-        string userPokemonName;
-        public void Happens(string a)
+        /// <param name="a"></param>
+        public void Happens(string uPoke)
         {
-            this.userPokemonName = a;
+            oldpokemon = userPokemonName;
+            this.userPokemonName = uPoke;
             Console.WriteLine(userPokemonName);
         }
+        
+        /// <summary>
+        /// We change the image in wpf app
+        /// </summary>
+        /// <param name="image"></param>
         public void ChangeImage(Image image)
         {
+            string filePath = @"C:\" + userPokemonName + ".png";
             try
             {
-                image.Source = new BitmapImage(new Uri(@"C:\" + userPokemonName + ".png"));
+                //Creates a copy of the file we got from sql
+                //and we use a copy, and when we delete the file
+                //copy is also deleted
+                BitmapImage imagee = new BitmapImage();
+                imagee.BeginInit();
+                imagee.CacheOption = BitmapCacheOption.OnLoad;
+                imagee.UriSource = new Uri(filePath);
+                imagee.EndInit();
+                image.Source = imagee;
+
+                // image.Source = new BitmapImage(new Uri(@"C:\" + userPokemonName + ".png"));
             }
-            catch(Exception exe)
+            catch (Exception exe)
             {
                 image.Source = new BitmapImage(new Uri(@"C:\notFound.png"));
                 Console.WriteLine(exe.Message);
@@ -39,33 +61,56 @@ namespace WpfUdlanSystem
         }
 
         /// <summary>
+        /// Remove the COPY of the image we get from the sql
+        /// </summary>
+        public void RemoveImage()
+        {
+            string filePath = @"C:\" + oldpokemon + ".png";
+
+            if (oldpokemon != userPokemonName)
+                try
+                {
+                    if (File.Exists(filePath))
+                    {
+                        File.Delete(filePath);
+                            Console.WriteLine("removed " + oldpokemon);
+                    }
+                }
+                catch (Exception exexexe)
+                {
+                    Console.WriteLine(exexexe.Message);
+                }
+        }
+
+        /// <summary>
         /// Gets image and prints it to C drive
         /// </summary>
+        //ext is incase i need the byte[]
         object ext;
-        string pokemonName;
-        public void RetriveImage(string uPokemonName)
+        public void RetriveImage()
         {
-            this.pokemonName = uPokemonName;
-            string sql = "use PokemonSearch; SELECT image FROM AllPokemon WHERE imageName = '" + pokemonName + "'";
+            // string sql = "use PokemonSearch; SELECT image FROM AllPokemon WHERE imageName = '" + pokemonName + "'";
+            string sql = dal.Querty(userPokemonName);
             string tempFile = @"C:\";
 
             try
             {
-                using (SqlCommand cmd = new SqlCommand(sql, connection))
+                using (SqlCommand cmd = new SqlCommand(sql, Dal.Connection))
                 {
                     cmd.Parameters.Add("@id", SqlDbType.Int).Value = 14;
-                    connection.Open();
+                    dal.ConnectionOpen();
 
                     using (SqlDataReader rdr = cmd.ExecuteReader())
                     {
-                        if (rdr.Read())
+                        while (rdr.Read())
                         {
                             ext = rdr[0];
                             //File.WriteAllBytes(tempFile + ext, (byte[])rdr["image"]);
-                            File.WriteAllBytes(tempFile + pokemonName + ".png", (byte[])rdr["image"]);
-
+                            File.WriteAllBytes(tempFile + userPokemonName + ".png", (byte[])rdr["image"]);
                         }
+                        rdr.Close();
                     }
+
                     #region Opens the file 
                     // OS run test
                     // Opens the image
@@ -80,13 +125,19 @@ namespace WpfUdlanSystem
                     //    Console.WriteLine(xe.Message.ToString());
                     //}
                     #endregion
-                    connection.Close();
                 }
             }
             catch (Exception exex)
             {
                 Console.WriteLine(exex.Message);
             }
+            finally
+            {
+                dal.ConnectionClose();
+            }
         }
+
+
     }
 }
+
