@@ -19,14 +19,15 @@ namespace WpfUdlanSystem
     /// </summary>
     public partial class LoginPage : Window
     {
+        LoginSystem log = new LoginSystem();
         public LoginPage()
         {
             InitializeComponent();
-            
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
+            log.UserLogin(usernameLogin.Text,passwordLogin.Text);
+            log.ReadingFromDb();
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -34,5 +35,9 @@ namespace WpfUdlanSystem
             
         }
 
+        private void TextBox_TextChanged_1(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }

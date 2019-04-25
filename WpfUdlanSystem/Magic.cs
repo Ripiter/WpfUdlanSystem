@@ -31,13 +31,15 @@ namespace WpfUdlanSystem
             this.userPokemonName = uPoke;
             Console.WriteLine(userPokemonName);
         }
-        
+
         /// <summary>
         /// We change the image in wpf app
         /// </summary>
         /// <param name="image"></param>
+        Image img;
         public void ChangeImage(Image image)
         {
+            this.img = image;
             string filePath = @"C:\" + userPokemonName + ".png";
             try
             {
@@ -92,7 +94,8 @@ namespace WpfUdlanSystem
             // string sql = "use PokemonSearch; SELECT image FROM AllPokemon WHERE imageName = '" + pokemonName + "'";
             string sql = dal.Querty(userPokemonName);
             string tempFile = @"C:\";
-
+            //make a folder that stores all images
+            //and check if its in the folder, if its not it takes from the server
             try
             {
                 using (SqlCommand cmd = new SqlCommand(sql, Dal.Connection))
@@ -107,10 +110,102 @@ namespace WpfUdlanSystem
                             ext = rdr[0];
                             //File.WriteAllBytes(tempFile + ext, (byte[])rdr["image"]);
                             File.WriteAllBytes(tempFile + userPokemonName + ".png", (byte[])rdr["image"]);
+
+                            AAA = ((byte[])rdr[0]);
+                            ShowPhoto(AAA);
                         }
                         rdr.Close();
                     }
 
+                    #region Opens the file 
+                    // OS run test
+                    // Opens the image
+                    //try
+                    //{
+                    //    Process prc = new Process();
+                    //    prc.StartInfo.FileName = tempFile + pokemonName + ".png";
+                    //    prc.Start();
+                    //}
+                    //catch (Exception xe)
+                    //{
+                    //    Console.WriteLine(xe.Message.ToString());
+                    //}
+                    #endregion
+                }
+            }
+            catch (Exception exex)
+            {
+                Console.WriteLine(exex.Message);
+            }
+            finally
+            {
+                dal.ConnectionClose();
+            }
+        }
+        /// <summary>
+        /// Make it look pretty
+        /// </summary>
+        byte[] aaa;
+        public byte[] AAA
+        {
+            get
+            {
+                return aaa;
+            }
+            set
+            {
+                aaa = value;
+            }
+        }
+        void ShowPhoto(byte[] a)
+        {
+
+            // Get the raw bytes of the image
+            byte[] photoSource = a;
+
+            // Create the bitmap object
+            // NOTE: This is not a GDI+ Bitmap object
+            BitmapImage bitmap = new BitmapImage();
+            MemoryStream strm = new MemoryStream();
+
+            // Well-known work-around to make Northwind images work
+            // Read the image into the bitmap object
+
+            int offset = 0;
+            strm.Write(photoSource, offset, photoSource.Length);
+            bitmap.BeginInit();
+            bitmap.StreamSource = strm;
+            // Set the Image with the Bitmap
+            bitmap.EndInit();
+            img.Source = bitmap;
+            Console.WriteLine("e");
+
+        }
+        public void FirstImage()
+        {
+            // string sql = "use PokemonSearch; SELECT image FROM AllPokemon WHERE imageName = '" + pokemonName + "'";
+            string tripleA = "pokemonNotFound";
+            string sql = dal.Querty(tripleA);
+            string tempFile = @"C:\";
+            //make a folder that stores all images
+            //and check if its in the folder, if its not it takes from the server
+            try
+            {
+                using (SqlCommand cmd = new SqlCommand(sql, Dal.Connection))
+                {
+                    cmd.Parameters.Add("@id", SqlDbType.Int).Value = 14;
+                    dal.ConnectionOpen();
+
+                    using (SqlDataReader rdr = cmd.ExecuteReader())
+                    {
+                        while (rdr.Read())
+                        {
+                            ext = rdr[0];
+                            //File.WriteAllBytes(tempFile + ext, (byte[])rdr["image"]);
+                            File.WriteAllBytes(tempFile + tripleA + ".png", (byte[])rdr["image"]);
+                        }
+                        rdr.Close();
+                    }
                     #region Opens the file 
                     // OS run test
                     // Opens the image

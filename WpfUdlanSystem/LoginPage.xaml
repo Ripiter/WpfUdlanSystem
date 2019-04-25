@@ -7,8 +7,8 @@
         mc:Ignorable="d"
         Title="LoginPage" Height="450" Width="800">
     <Grid>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="308,214,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" TextChanged="TextBox_TextChanged"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="308,257,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="usernameLogin" HorizontalAlignment="Left" Height="23" Margin="308,214,0,0" TextWrapping="Wrap" Text="Admin" VerticalAlignment="Top" Width="120" TextChanged="TextBox_TextChanged"/>
+        <TextBox Name="passwordLogin" HorizontalAlignment="Left" Height="23" Margin="308,257,0,0" TextWrapping="Wrap" Text="HelloWorld" VerticalAlignment="Top" Width="120" TextChanged="TextBox_TextChanged_1"/>
         <Button Content="Button" HorizontalAlignment="Left" Margin="308,307,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
         <Image Name="ImageTest" HorizontalAlignment="Left" Height="100" Margin="556,167,0,0" VerticalAlignment="Top" Width="100"/>
 

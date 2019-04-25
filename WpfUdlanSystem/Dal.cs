@@ -10,6 +10,7 @@ namespace WpfUdlanSystem
 {
     class Dal
     {
+        string connectionString = @"Data Source=ZBC-EMA-23111;Initial Catalog=master; Integrated Security=True";
         static SqlConnection connection = new SqlConnection(@"Data Source=ZBC-EMA-23111;Initial Catalog=master; Integrated Security=True");
 
         public static SqlConnection Connection
@@ -21,6 +22,18 @@ namespace WpfUdlanSystem
             set
             {
                 connection = value;
+            }
+        }
+
+        public string ConnectionString
+        {
+            get
+            {
+                return this.connectionString;
+            }
+            set
+            {
+                this.connectionString = value;
             }
         }
 
@@ -37,6 +50,7 @@ namespace WpfUdlanSystem
             string sql = "use PokemonSearch; SELECT image FROM AllPokemon WHERE imageName = '" + pokemonName + "'";
             return sql;
         }
+       
 
     }
 }

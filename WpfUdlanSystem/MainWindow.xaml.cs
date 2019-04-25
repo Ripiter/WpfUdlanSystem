@@ -35,7 +35,13 @@ namespace WpfUdlanSystem
         {
             InitializeComponent();
             //TO DO: change the @c:\ to projekt file
-            pokemonImage.Source = new BitmapImage(new Uri(@"C:\notFound.png"));
+            newMagic.FirstImage();
+            //pokemonImage.Source = new BitmapImage(new Uri(@"C:\pokemonNotFound.png"));
+
+            pokemonImage.Source = new BitmapImage(new Uri(@"\imgNotFound\notFound.png", UriKind.Relative));
+
+            //if file exists show image, else get image from database
+            //pokemonImage.Source = new BitmapImage(new Uri(@"\Pokemon\ "+ "pokemonname" +" .png", UriKind.Relative));
         }
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -64,6 +70,15 @@ namespace WpfUdlanSystem
         {
             string teafefe = tea.Content.ToString();
             newMagic.Happens(teafefe);
+        }
+
+        private void RedirectLoginPage(object sender, RoutedEventArgs e)
+        {
+            LoginPage windowTwo = new LoginPage();
+            //this will open your child window
+            windowTwo.Show();
+            //this will close parent window. windowOne in this case
+            this.Close();
         }
     }
 
