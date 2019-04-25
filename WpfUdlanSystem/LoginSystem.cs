@@ -115,7 +115,7 @@ namespace WpfUdlanSystem
             //if wrong message show "Wrong pass"
             if (correctPass == true)
             {
-                Console.WriteLine("Correct Pass");
+                Console.WriteLine("Correct pass");
             }
             else
             {
