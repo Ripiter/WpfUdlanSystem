@@ -29,61 +29,29 @@ namespace WpfUdlanSystem
 
         public void ReadingFromDb()
         {
-            //code that reads passwords and username from db
+            string commandText = "use PokemonSearch; select password from LoginTable WHERE Username = @Username";
 
+            using (SqlConnection connection = new SqlConnection(dal.ConnectionString))
+            {
+                SqlCommand command = new SqlCommand(commandText, connection);
+                command.Parameters.Add("@Username", SqlDbType.NVarChar);//.Value = userUsername;
+                command.Parameters["@Username"].Value = userUsername;
 
-            //txtUserId = getRequestString("UserId");
-            //sql = "SELECT * FROM Customers WHERE CustomerId = @0";
-            //command = new SqlCommand(sql);
-            //command.Parameters.AddWithValue("@0", txtUserID);
-            //command.ExecuteReader();
-            
-                // Update the demographics for a store, which is stored  
-                // in an xml column.  
-                string commandText = "use PokemonSearch; select password from LoginTable WHERE Username = @Username";
-
-                using (SqlConnection connection = new SqlConnection(dal.ConnectionString))
+                connection.Open();
+                using(SqlDataReader rdr = command.ExecuteReader())
                 {
-                    SqlCommand command = new SqlCommand(commandText, connection);
-                    command.Parameters.Add("@Username", SqlDbType.NVarChar);//.Value = userUsername;
-                    command.Parameters["@Username"].Value = userUsername;
-               
-
-                  //   command.Parameters.AddWithValue("@Username", userUsername);
-
-                    // Use AddWithValue to assign Demographics. 
-                    // SQL Server will implicitly convert strings into XML.
-    
-                      dal.ConnectionOpen();
-                      connection.Open();
-                    using(SqlDataReader rdr = command.ExecuteReader())
+                    while (rdr.Read())
                     {
-                        while (rdr.Read())
-                        {
-                            string ext = rdr[0].ToString();
-                            Console.WriteLine(ext);
-                            //File.WriteAllBytes(tempFile + ext, (byte[])rdr["image"]);
-                            DecryptPassword(ext);
-                        }
-                        rdr.Close();
+                        string ext = rdr[0].ToString();
+                        Console.WriteLine(ext);
+
+                        DecryptPassword(ext);
                     }
-                    dal.ConnectionClose();
-                    connection.Close();
+                    rdr.Close();
                 }
-                //try
-                //    {
-                //        connection.Open();
-                //        string rowsAffected = command.ExecuteReader();
-                //        Console.WriteLine("RowsAffected: {0}", rowsAffected);
-                //    }
-                //    catch (Exception ex)
-                //    {
-                //        Console.WriteLine(ex.Message);
-                //    }
-            
+                connection.Close();
+            }            
         }
-
-
 
         void DecryptPassword(string encryptedPass)
         {
@@ -126,7 +94,7 @@ namespace WpfUdlanSystem
 
         public void UserLogin(string uUsername, string uPassword)
         {
-            userUsername = uUsername;
+            this.userUsername = uUsername;
             this.userPassword = uPassword;
         }
     }
