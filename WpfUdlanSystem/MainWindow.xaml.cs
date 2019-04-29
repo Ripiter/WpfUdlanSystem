@@ -53,10 +53,8 @@ namespace WpfUdlanSystem
         {
             string poke = pokemonName.Text;
             newMagic.Happens(poke);
-            newMagic.RemoveImage();
-
-            newMagic.RetriveImage();
             newMagic.ChangeImage(pokemonImage);
+            newMagic.RetriveImage();
         }
         
         //When user chooses coffe

@@ -40,49 +40,49 @@ namespace WpfUdlanSystem
         public void ChangeImage(Image image)
         {
             this.img = image;
-            string filePath = @"C:\" + userPokemonName + ".png";
-            try
-            {
-                //Creates a copy of the file we got from sql
-                //and we use a copy, and when we delete the file
-                //copy is also deleted
-                BitmapImage imagee = new BitmapImage();
-                imagee.BeginInit();
-                imagee.CacheOption = BitmapCacheOption.OnLoad;
-                imagee.UriSource = new Uri(filePath);
-                imagee.EndInit();
-                image.Source = imagee;
+            //string filePath = @"C:\" + userPokemonName + ".png";
+            //try
+            //{
+            //    //Creates a copy of the file we got from sql
+            //    //and we use a copy, and when we delete the file
+            //    //copy is also deleted
+            //    BitmapImage imagee = new BitmapImage();
+            //    imagee.BeginInit();
+            //    imagee.CacheOption = BitmapCacheOption.OnLoad;
+            //    imagee.UriSource = new Uri(filePath);
+            //    imagee.EndInit();
+            //    image.Source = imagee;
 
-                // image.Source = new BitmapImage(new Uri(@"C:\" + userPokemonName + ".png"));
-            }
-            catch (Exception exe)
-            {
-                image.Source = new BitmapImage(new Uri(@"C:\notFound.png"));
-                Console.WriteLine(exe.Message);
-            }
+            //    // image.Source = new BitmapImage(new Uri(@"C:\" + userPokemonName + ".png"));
+            //}
+            //catch (Exception exe)
+            //{
+            //    image.Source = new BitmapImage(new Uri(@"C:\notFound.png"));
+            //    Console.WriteLine(exe.Message);
+            //}
         }
 
         /// <summary>
         /// Remove the COPY of the image we get from the sql
         /// </summary>
-        public void RemoveImage()
-        {
-            string filePath = @"C:\" + oldpokemon + ".png";
+        //public void RemoveImage()
+        //{
+        //    string filePath = @"C:\" + oldpokemon + ".png";
 
-            if (oldpokemon != userPokemonName)
-                try
-                {
-                    if (File.Exists(filePath))
-                    {
-                        File.Delete(filePath);
-                            Console.WriteLine("removed " + oldpokemon);
-                    }
-                }
-                catch (Exception exexexe)
-                {
-                    Console.WriteLine(exexexe.Message);
-                }
-        }
+        //    if (oldpokemon != userPokemonName)
+        //        try
+        //        {
+        //            if (File.Exists(filePath))
+        //            {
+        //                File.Delete(filePath);
+        //                    Console.WriteLine("removed " + oldpokemon);
+        //            }
+        //        }
+        //        catch (Exception exexexe)
+        //        {
+        //            Console.WriteLine(exexexe.Message);
+        //        }
+        //}
 
         /// <summary>
         /// Gets image and prints it to C drive
@@ -93,7 +93,7 @@ namespace WpfUdlanSystem
         {
             // string sql = "use PokemonSearch; SELECT image FROM AllPokemon WHERE imageName = '" + pokemonName + "'";
             string sql = dal.Querty(userPokemonName);
-            string tempFile = @"C:\";
+            //string tempFile = @"C:\";
             //make a folder that stores all images
             //and check if its in the folder, if its not it takes from the server
             try
@@ -109,7 +109,8 @@ namespace WpfUdlanSystem
                         {
                             ext = rdr[0];
                             //File.WriteAllBytes(tempFile + ext, (byte[])rdr["image"]);
-                            File.WriteAllBytes(tempFile + userPokemonName + ".png", (byte[])rdr["image"]);
+                           
+                            //File.WriteAllBytes(tempFile + userPokemonName + ".png", (byte[])rdr["image"]);
 
                             AAA = ((byte[])rdr[0]);
                             ShowPhoto(AAA);

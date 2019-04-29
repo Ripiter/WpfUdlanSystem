@@ -28,6 +28,12 @@ namespace WpfUdlanSystem
         {
             log.UserLogin(usernameLogin.Text,passwordLogin.Text);
             log.ReadingFromDb();
+
+            ///Maybe??
+            
+            //if(log.BoolPassword() == true)
+            //    Console.WriteLine("true");
+
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)

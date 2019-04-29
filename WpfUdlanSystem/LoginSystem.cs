@@ -17,15 +17,7 @@ namespace WpfUdlanSystem
         #region variables 
         string userUsername;
         string userPassword;
-
-        string dbUsername;
-        string dbPassword;
         #endregion
-
-        #region Get, Set
-
-        #endregion
-
 
         public void ReadingFromDb()
         {
@@ -42,10 +34,10 @@ namespace WpfUdlanSystem
                 {
                     while (rdr.Read())
                     {
-                        string ext = rdr[0].ToString();
-                        Console.WriteLine(ext);
-
-                        DecryptPassword(ext);
+                        string dbEnkryptedPass = rdr[0].ToString();
+                        Console.WriteLine(dbEnkryptedPass);
+                        
+                        DecryptPassword(dbEnkryptedPass);
                     }
                     rdr.Close();
                 }
@@ -55,12 +47,12 @@ namespace WpfUdlanSystem
 
         void DecryptPassword(string encryptedPass)
         {
-            //Decrypt password from db
+            //Decrypt password from database
             byte[] hashBytes = Convert.FromBase64String(encryptedPass);
-
             byte[] salt = new byte[16];
             Array.Copy(hashBytes, 0, salt, 0, 16);
 
+            //Enkrypts users password to comare the bytes later
             string passQuestionMark = string.Format("{0}", userPassword);
             Rfc2898DeriveBytes pbkdf2 = new Rfc2898DeriveBytes(passQuestionMark, salt, 10000);
             byte[] hash = pbkdf2.GetBytes(20);
@@ -71,8 +63,8 @@ namespace WpfUdlanSystem
         void Compare(byte[] hashBytees, byte[] haash)
         {
             bool correctPass = true;
-            //Compers uUsername with userUsername
-            //and compers upassword with userPassword
+            
+            //Compares bytes of enkrypted passwords
             for (int i = 0; i < 20; i++)
             {
                 if (hashBytees[i + 16] != haash[i])
@@ -81,14 +73,16 @@ namespace WpfUdlanSystem
              
             //Show message go to next window,
             //if wrong message show "Wrong pass"
+            //wil delete later
             if (correctPass == true)
-            {
                 Console.WriteLine("Correct pass");
-            }
             else
-            {
-                Console.WriteLine("Wrong pas");
-            }
+                Console.WriteLine("Wrong pass");
+            
+        }
+        public bool BoolPassword()
+        {
+            return true;
         }
 
 
